@@ -2,8 +2,10 @@
 
 Flexa is an intelligent fitness chatbot that provides personalized workout plans, diet recommendations, and fitness coaching powered by Machine Learning. The application uses a trained ML model to analyze user health data and deliver customized fitness guidance.
 
+## Web Interface
 ![alt text](image.png)
 
+## Chat Interface
 ![alt text](image-1.png)
 
 ## ✨ Features
