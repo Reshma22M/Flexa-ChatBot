@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Flexa AI | Fitness Chat Interface</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8F2BE5",
+                        "accent-pink": "#FF4DA6",
+                        "background-light": "#ffffff",
+                        "background-dark": "#171736",
+                        "chat-user": "#f3f4f6",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Spline Sans', sans-serif; }
+        .flexa-gradient {
+            background: linear-gradient(135deg, #8F2BE5 0%, #FF4DA6 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e5e7eb;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased font-display">
+<div class="flex h-screen overflow-hidden">
+<!-- Left Sidebar: History & Profile -->
+<aside class="w-72 flex-shrink-0 border-r border-slate-100 dark:border-slate-800 flex flex-col bg-white dark:bg-slate-900">
+<div class="p-6 border-b border-slate-50 dark:border-slate-800">
+<div class="flex items-center gap-3 mb-8">
+<div class="size-10 flexa-gradient rounded-xl flex items-center justify-center text-white shadow-lg">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Flexa AI</h2>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-primary text-white py-3 px-4 rounded-xl font-semibold shadow-lg hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-[20px]"></span>
+New Workout Chat
+</button>
+</div>
+<nav class="flex-1 overflow-y-auto p-4 custom-scrollbar">
+<p class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-4 px-2">Recent Sessions</p>
+<div class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-3 rounded-xl bg-primary/10 text-primary font-medium border border-primary/10" href="#">
+<span class="material-symbols-outlined text-[20px]"> </span>
+<span class="truncate">Workout Plan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]"> </span>
+<span class="truncate">Meal Plan</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]"> </span>
+<span class="truncate">Recommended Exercises</span>
+</a>
+</div>
+</nav>
+<div class="p-4 border-t border-slate-50 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 rounded-xl">
+<div class="size-10 rounded-full border-2 border-primary/20 overflow-hidden">
+<div class="w-full h-full bg-center bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBPykt2BD6vic161HHD0WjCmRUQWOw8OmEBx_-VPq-dIxKENeTJ6YS8KjsQotmsG67f1-VAk59aWNqp40b9vS_Xm43cKcnxtmircDOnnaxml8jKmreLIos8WRULxJzkJqojAoazz-McyWiElagTyfRwkAsCOLBlXyOA55jYl-06GqCkPQAdiOI0EwvK7UUQar1198Uz5dmBe4uaaf2hEH_Qxk5GEbw-7ztDMi_gmHhp7lQibZeIQzCpLZTFVdeesp_9n8nvdYNQYIYR"); background-size: cover; background-position: center;'></div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-bold text-slate-900 dark:text-white truncate">Alex Johnson</p>
+<p class="text-xs text-slate-500 font-medium">Pro Athlete</p>
+</div>
+<button class="text-slate-400 hover:text-slate-600">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Chat Content -->
+<main class="flex-1 flex flex-col relative bg-[#FAFAFE] dark:bg-background-dark">
+<!-- Chat Header -->
+<header class="h-16 flex-shrink-0 flex items-center justify-between px-8 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 z-10">
+<div class="flex items-center gap-3">
+<div class="size-2 rounded-full bg-green-500 animate-pulse"></div>
+<h3 class="font-bold text-slate-800 dark:text-white">5k Training Prep</h3>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+<span class="material-symbols-outlined">my profile</span>
+</button>
+</div>
+</header>
+<!-- Scrollable Messages -->
+<div class="flex-1 overflow-y-auto p-8 space-y-8 custom-scrollbar">
+<!-- Flexa Message -->
+<div class="flex items-start gap-4 max-w-3xl">
+<div class="size-10 flex-shrink-0 flexa-gradient rounded-full flex items-center justify-center text-white shadow-md">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+</div>
+<div class="space-y-2">
+<p class="text-[11px] font-bold text-slate-400 px-1">FLEXA AI</p>
+<div class="flexa-gradient text-white px-6 py-4 rounded-2xl rounded-tl-none shadow-xl leading-relaxed">
+Hi, Alex! Ready to crush your 5k training today? I've updated your calorie goals based on yesterday's high-intensity activity.
+</div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex items-start gap-4 max-w-3xl ml-auto flex-row-reverse">
+<div class="size-10 flex-shrink-0 bg-white dark:bg-slate-800 rounded-full overflow-hidden border border-slate-100 dark:border-slate-700">
+<div class="w-full h-full bg-center bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBo5Q_YJZol5yqqQwfkBIFcVS_17DIvf95eVOCPoZTanv_L4_gxowvCpnQ0e1ij3T-rzgUIkNaMMvT2cmo9-QEclBiQ2EJet01qOS6USzIIomJ_oNCDRt2gbP6dWeMWmG9suE5g_lNinhf7cFyyxIuKXHM-RQtkyuC6nhccyZ-Ws2PTG4yRUPQPqvM0wf0_KNvwfK_uYwowGlMm1kst22jsJ5-qRoA_dPr3hf_DbL5rxX6UxLq9p5RAQZiJb1A2XG0INeTdzNsMkO1W"); background-size: cover; background-position: center;'></div>
+</div>
+<div class="space-y-2">
+<p class="text-[11px] font-bold text-slate-400 text-right px-1">YOU</p>
+<div class="bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-6 py-4 rounded-2xl rounded-tr-none shadow-sm border border-slate-100 dark:border-slate-700 leading-relaxed">
+Morning Flexa! Yes, feeling great. What's the plan for today?
+</div>
+</div>
+</div>
+<!-- Flexa Message with Action Card -->
+<div class="flex items-start gap-4 max-w-3xl">
+<div class="size-10 flex-shrink-0 flexa-gradient rounded-full flex items-center justify-center text-white shadow-md">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+</div>
+<div class="space-y-2">
+<p class="text-[11px] font-bold text-slate-400 px-1">FLEXA AI</p>
+<div class="flexa-gradient text-white px-6 py-4 rounded-2xl rounded-tl-none shadow-xl leading-relaxed">
+Today we're focusing on intervals. 10 mins warm-up, then 5x400m sprints with 90s recovery. You've got this!
+</div>
+<!-- Workout Details Card -->
+<div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm flex items-center justify-between group cursor-pointer hover:border-primary transition-colors">
+<div class="flex items-center gap-4">
+<div class="size-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]">timer</span>
+</div>
+<div>
+<p class="font-bold text-slate-900 dark:text-white">View Interval Drill Details</p>
+<p class="text-xs text-slate-500">45 Minutes • High Intensity</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<footer class="p-6 bg-transparent">
+<div class="max-w-4xl mx-auto relative group">
+<div class="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity rounded-full"></div>
+<div class="relative flex items-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-full p-2 shadow-2xl">
+<button class="p-3 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">attachment</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-slate-800 dark:text-white px-4 placeholder:text-slate-400 font-medium" placeholder="Ask Flexa about your fitness journey..." type="text"/>
+<button class="size-12 flexa-gradient rounded-full flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform">
+<span class="material-symbols-outlined fill-1">send</span>
+</button>
+</div>
+</div>
+<p class="text-center text-[10px] text-slate-400 mt-4 uppercase tracking-widest font-bold">Flexa may provide suggestions based on AI. Consult a doctor before starting new routines.</p>
+</footer>
+</main>
+<!-- Right Sidebar: Fitness Dashboard -->
+<aside class="w-80 flex-shrink-0 bg-white dark:bg-slate-900 border-l border-slate-100 dark:border-slate-800 flex flex-col p-6">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white mb-6">Fitness Dashboard</h2>
+<!-- Calorie Goal Ring -->
+<div class="relative bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 mb-6 flex flex-col items-center">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Daily Calorie Goal</p>
+<div class="relative size-40">
+<svg class="size-full -rotate-90">
+<circle class="text-slate-200 dark:text-slate-700" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-accent-pink" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="132" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-3xl font-black text-slate-900 dark:text-white">1,840</span>
+<span class="text-[10px] font-bold text-slate-400 uppercase">kcal left</span>
+</div>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-2 gap-4 mb-8">
+<div class="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 p-4 rounded-2xl shadow-sm">
+<div class="flex items-center gap-2 text-primary mb-2">
+<span class="material-symbols-outlined text-[18px]">footprint</span>
+<span class="text-[10px] font-bold uppercase">Steps</span>
+</div>
+<p class="text-2xl font-black text-slate-900 dark:text-white">8,432</p>
+<div class="w-full bg-slate-100 dark:bg-slate-700 h-1 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary h-full w-[84%]"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 p-4 rounded-2xl shadow-sm">
+<div class="flex items-center gap-2 text-orange-500 mb-2">
+<span class="material-symbols-outlined text-[18px]">local_fire_department</span>
+<span class="text-[10px] font-bold uppercase">Active</span>
+</div>
+<p class="text-2xl font-black text-slate-900 dark:text-white">42m</p>
+<div class="w-full bg-slate-100 dark:bg-slate-700 h-1 rounded-full mt-2 overflow-hidden">
+<div class="bg-orange-500 h-full w-[70%]"></div>
+</div>
+</div>
+</div>
+<!-- Next Workout Preview -->
+<div class="mt-auto">
+<p class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-4">Next Workout</p>
+<div class="bg-slate-900 text-white p-5 rounded-2xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/20 blur-3xl -mr-16 -mt-16 group-hover:scale-150 transition-transform"></div>
+<div class="relative z-10">
+<div class="flex items-center justify-between mb-4">
+<span class="bg-white/20 px-3 py-1 rounded-full text-[10px] font-bold backdrop-blur-md uppercase">Today at 5:00 PM</span>
+<span class="material-symbols-outlined text-accent-pink">bolt</span>
+</div>
+<h4 class="text-lg font-bold mb-1">HIIT & Core Blast</h4>
+<p class="text-slate-400 text-sm mb-4">Focus on explosive power and abdominal stability.</p>
+<button class="w-full bg-white text-slate-900 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-100 transition-colors">
+Prepare Gear
+</button>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</body>
+</html>

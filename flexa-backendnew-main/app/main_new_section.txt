@@ -1,0 +1,38 @@
+    if state == "ASK_VIDEOS":
+        wants_videos = normalize_yes_no(text) == "Yes"
+        data["wants_videos"] = wants_videos
+        session["state"] = "DONE"
+        
+        if wants_videos:
+            rec = session.get("recommendation")
+            if rec:
+                rec_with_videos = recommender.recommend(
+                    profile={
+                        "sex": data["sex"],
+                        "age": data["age"],
+                        "height_m": data["height_m"],
+                        "weight_kg": data["weight_kg"],
+                        "hypertension": data["hypertension"],
+                        "diabetes": data["diabetes"],
+                    },
+                    wants_videos=True
+                )
+                
+                if rec_with_videos["workouts"]:
+                    msg = "Here are some suggested YouTube workout videos for you:\n\n"
+                    for w in rec_with_videos["workouts"]:
+                        msg += f"* {w['title']} ({w['duration']} min)\n  {w['youtube_link']}\n\n"
+                    msg += "Good luck with your fitness journey!"
+                else:
+                    msg = "I couldn't find specific videos at the moment. Good luck!"
+            else:
+                msg = "Great! Good luck with your fitness journey!"
+        else:
+            msg = "No problem! Good luck with your fitness journey!"
+
+        return ChatMessageResponse(
+            session_id=payload.session_id,
+            state=session["state"],
+            data_collected=data,
+            message=msg
+        )
