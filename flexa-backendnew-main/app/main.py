@@ -174,6 +174,34 @@ def chat_message(payload: ChatMessageRequest):
         # Check if user has health conditions
         has_conditions = data["hypertension"] == "Yes" or data["diabetes"] == "Yes"
         
+        # GOAL DRIFT DETECTION
+        # Before generating recommendations, check if stated problem matches ML prediction
+        drift_result = recommender.detect_goal_drift(
+            profile={
+                "sex": data["sex"],
+                "age": data["age"],
+                "height_m": data["height_m"],
+                "weight_kg": data["weight_kg"],
+                "hypertension": data["hypertension"],
+                "diabetes": data["diabetes"],
+            },
+            stated_problem=data.get("problem", "")
+        )
+        
+        # Store drift detection result
+        session["drift_result"] = drift_result
+        
+        # If drift detected, ask for clarification
+        if drift_result["has_drift"]:
+            session["state"] = "ASK_GOAL_CLARIFICATION"
+            return ChatMessageResponse(
+                session_id=payload.session_id,
+                state=session["state"],
+                data_collected=data,
+                message=drift_result["drift_message"] + "\n\nPlease reply: 'Follow AI recommendation' or 'Keep my original goal'"
+            )
+        
+        # No drift, proceed normally
         # Generate ML-based recommendation
         rec = recommender.recommend(
             profile={
@@ -229,6 +257,89 @@ def chat_message(payload: ChatMessageRequest):
         msg += "\n"
         
         msg += f"📌 EXPERT RECOMMENDATION\n{plan['recommendation']}\n\n"
+        
+        session["state"] = "ASK_VIDEOS"
+        return ChatMessageResponse(
+            session_id=payload.session_id,
+            state=session["state"],
+            data_collected=data,
+            message=msg + "Would you like me to suggest some YouTube workout videos as well? (Yes/No)"
+        )
+
+    if state == "ASK_GOAL_CLARIFICATION":
+        # User responded to goal drift detection
+        response = text.lower()
+        
+        if "ai" in response or "recommendation" in response or "follow" in response:
+            # User wants to follow AI recommendation
+            data["user_chose_ai_goal"] = True
+            data["clarification"] = "Followed AI recommendation"
+        else:
+            # User wants to keep original goal
+            data["user_chose_ai_goal"] = False
+            data["clarification"] = "Kept original goal"
+        
+        # Now proceed with recommendation (will use original ML prediction either way)
+        has_conditions = data["hypertension"] == "Yes" or data["diabetes"] == "Yes"
+        
+        rec = recommender.recommend(
+            profile={
+                "sex": data["sex"],
+                "age": data["age"],
+                "height_m": data["height_m"],
+                "weight_kg": data["weight_kg"],
+                "hypertension": data["hypertension"],
+                "diabetes": data["diabetes"],
+            },
+            wants_videos=False
+        )
+
+        # Store recommendation for later
+        session["recommendation"] = rec
+        
+        # Build a friendly response text
+        plan = rec["plan"]
+        msg = ""
+        
+        # Add acknowledgment of user's choice
+        if data["user_chose_ai_goal"]:
+            msg += "✅ Great choice! Following the AI recommendation based on your stats.\\n\\n"
+        else:
+            msg += "✅ Understood! We'll respect your goal preference.\\n\\n"
+        
+        # Add doctor warning if health conditions exist
+        if has_conditions:
+            msg += "⚠️ IMPORTANT: Please consult your doctor before starting any new workout plan.\\n\\n"
+        
+        msg += f"✅ {data['name']}, here's your personalized plan (ML-based):\\n\\n"
+        
+        msg += "📊 YOUR STATS\\n"
+        msg += f"• BMI: {rec['bmi']} ({rec['level']})\\n"
+        msg += f"• Fitness Goal: {plan['fitness_goal']}\\n"
+        msg += f"• Plan Type: {plan['fitness_type']}\\n\\n"
+        
+        msg += "🏋️ RECOMMENDED EXERCISES\\n"
+        exercises = plan['exercises'].split(',') if ',' in plan['exercises'] else [plan['exercises']]
+        for ex in exercises:
+            msg += f"• {ex.strip()}\\n"
+        msg += "\\n"
+        
+        msg += "🧰 EQUIPMENT NEEDED\\n"
+        equipment = plan['equipment'].split(',') if ',' in plan['equipment'] else [plan['equipment']]
+        for eq in equipment:
+            msg += f"• {eq.strip()}\\n"
+        msg += "\\n"
+        
+        msg += "🥗 DIET RECOMMENDATIONS\\n"
+        diet_text = plan['diet']
+        diet_text = diet_text.replace(';', ',')
+        diet_text = diet_text.replace(' and ', ',')
+        diets = [d.strip() for d in diet_text.split(',') if d.strip()]
+        for diet in diets:
+            msg += f"• {diet}\\n"
+        msg += "\\n"
+        
+        msg += f"📌 EXPERT RECOMMENDATION\\n{plan['recommendation']}\\n\\n"
         
         session["state"] = "ASK_VIDEOS"
         return ChatMessageResponse(

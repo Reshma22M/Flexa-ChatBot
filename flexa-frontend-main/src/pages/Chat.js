@@ -119,9 +119,12 @@ const Chat = () => {
   };
 
   const formatMLResponse = (content) => {
+    // Replace escaped newlines with actual newlines
+    const cleanContent = content.replace(/\\n/g, '\n');
+    
     // Check if this is an ML recommendation response or video list
-    if (content.includes('personalized plan') || content.includes('ML-based') || content.includes('WORKOUT VIDEOS') || content.includes('🔗 Watch:')) {
-      const lines = content.split('\n');
+    if (cleanContent.includes('personalized plan') || cleanContent.includes('ML-based') || cleanContent.includes('WORKOUT VIDEOS') || cleanContent.includes('🔗 Watch:')) {
+      const lines = cleanContent.split('\n');
       let formatted = [];
       
       lines.forEach((line, idx) => {
@@ -370,8 +373,10 @@ const Chat = () => {
                       );
                     }
                     // For user messages, use black text; for AI messages, use white
+                    // Replace escaped newlines with actual newlines
+                    const cleanContent = msg.content.replace(/\\n/g, '\n');
                     const textColor = msg.type === 'user' ? '#000' : '#fff';
-                    return <div style={{ whiteSpace: 'pre-wrap', color: textColor }}>{msg.content}</div>;
+                    return <div style={{ whiteSpace: 'pre-wrap', color: textColor }}>{cleanContent}</div>;
                   })()}
                 </div>
                 {msg.metadata && (
