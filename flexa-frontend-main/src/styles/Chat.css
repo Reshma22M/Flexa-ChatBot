@@ -255,9 +255,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  background:  #ffffff;
+  background: linear-gradient(135deg, #8F2BE5, #FF4DA6);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: none;
   z-index: 10;
 }
 
@@ -267,10 +267,14 @@
   gap: 0.75rem;
 }
 
+.header-left h3 {
+  color: #ffffff;
+}
+
 .status-dot {
   width: 6px;
   height: 6px;
-  background: #10b981;
+  background: #ffffff;
   border-radius: 50%;
   animation: pulse 2s infinite;
 }
@@ -290,9 +294,13 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #6b7280;
+  color: #ffffff;
   border-radius: 0.5rem;
   transition: all 0.2s;
+}
+
+.header-actions button:hover {
+  transform: scale(1.1);
 }
 
 .header-actions button:hover {
@@ -488,12 +496,17 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #9ca3af;
-  transition: color 0.2s;
+  color: #8F2BE5;
+  transition: all 0.2s;
 }
 
 .input-action:hover {
-  color: #8F2BE5;
+  color: #FF4DA6;
+  transform: scale(1.1);
+}
+
+.input-action .material-symbols-outlined {
+  font-size: 1.5rem;
 }
 
 .input-container input {
@@ -514,19 +527,21 @@
 .send-btn {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, #8F2BE5, #FF4DA6);
+  background: transparent;
   border: none;
-  border-radius: 50%;
-  color: white;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s;
+  transition: all 0.3s ease;
 }
 
 .send-btn:hover:not(:disabled) {
-  transform: scale(1.05);
+  transform: scale(1.1);
+}
+
+.send-btn:active:not(:disabled) {
+  transform: scale(0.95);
 }
 
 .send-btn:disabled {
@@ -566,15 +581,15 @@
 
 /* User Profile Card */
 .user-profile-card {
-  background: linear-gradient(135deg, #8F2BE5 0%, #FF4DA6 100%);
-  border: none;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 1.25rem;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   width: 100%;
   box-sizing: border-box;
-  box-shadow: 0 12px 24px rgba(139, 43, 229, 0.2);
-  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  color: #1f2937;
 }
 
 .profile-header {
@@ -583,7 +598,7 @@
   gap: 1rem;
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid #f3f4f6;
   width: 100%;
 }
 
@@ -593,8 +608,8 @@
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
-  border: 3px solid white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border: 3px solid #8F2BE5;
+  box-shadow: 0 2px 8px rgba(143, 43, 229, 0.2);
 }
 
 .profile-avatar img {
@@ -606,7 +621,7 @@
 .profile-info h3 {
   font-size: 1.125rem;
   font-weight: 700;
-  color: white;
+  color: #1f2937;
   margin: 0;
   margin-bottom: 0.25rem;
 }
@@ -614,7 +629,7 @@
 .profile-status {
   font-size: 0.75rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  color: #10b981;
   margin: 0;
   display: flex;
   align-items: center;
@@ -623,7 +638,7 @@
 
 .profile-status::before {
   content: '●';
-  color: rgba(255, 255, 255, 0.9);
+  color: #10b981;
 }
 
 .profile-metrics {
@@ -640,12 +655,12 @@
   gap: 0.5rem;
   text-align: center;
   padding: 0.875rem;
-  background: rgba(255, 255, 255, 0.15);
+  background: #f9fafb;
   border-radius: 0.875rem;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid #e5e7eb;
   box-sizing: border-box;
   min-width: 0;
-  color: white;
+  color: #1f2937;
 }
 
 .metric-label {
@@ -653,7 +668,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  color: rgba(255, 255, 255, 0.8);
+  color: #6b7280;
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -662,7 +677,7 @@
 .metric-value {
   font-size: 1rem;
   font-weight: 700;
-  color: white;
+  color: #1f2937;
   word-break: break-word;
 }
 
@@ -675,24 +690,24 @@
 .bmi-value {
   font-size: 1.125rem;
   font-weight: 700;
-  color: white;
+  color: #8F2BE5;
 }
 
 .bmi-category {
   font-size: 0.625rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  color: #6b7280;
 }
 
 .calorie-card {
-  background: linear-gradient(135deg, rgba(255, 77, 166, 0.1) 0%, rgba(139, 43, 229, 0.1) 100%);
-  border: 2px solid rgba(139, 43, 229, 0.2);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 1rem;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   text-align: center;
   width: 100%;
-  box-shadow: 0 4px 12px rgba(139, 43, 229, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .card-title {
@@ -700,7 +715,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #9ca3af;
+  color: #6b7280;
   margin-bottom: 1rem;
 }
 

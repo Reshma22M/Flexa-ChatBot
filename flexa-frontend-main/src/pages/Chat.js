@@ -310,7 +310,7 @@ const Chat = () => {
         <header className="chat-header">
           <div className="header-left">
             <div className="status-dot"></div>
-            <h3>5k Training Prep</h3>
+            <h3>Chat with Flexa AI</h3>
           </div>
           <div className="header-actions">
             <button><span className="material-symbols-outlined">search</span></button>
@@ -414,7 +414,7 @@ const Chat = () => {
         <footer className="chat-footer">
           <div className="input-container">
             <button className="input-action">
-              <span className="material-symbols-outlined">attachment</span>
+              <img src="/attachment.png" alt="attachment" style={{ width: '24px', height: '24px' }} />
             </button>
             <input
               type="text"
@@ -425,7 +425,7 @@ const Chat = () => {
               disabled={loading}
             />
             <button onClick={sendMessage} disabled={loading} className="send-btn">
-              <span className="material-symbols-outlined">send</span>
+              <img src="/send2.png" alt="send" style={{ width: '24px', height: '24px' }} />
             </button>
           </div>
           <p className="chat-disclaimer">Flexa may provide suggestions based on AI. Consult a doctor before starting new routines.</p>
@@ -487,7 +487,7 @@ const Chat = () => {
 
         {/* Macronutrient Breakdown */}
         <div className="macro-card">
-          <p className="card-title">Macronutrients</p>
+          <p className="card-title">Macro nutrients</p>
           <div className="macro-item">
             <div className="macro-header">
               <span className="macro-label">🍗 Protein</span>
@@ -552,7 +552,7 @@ const Chat = () => {
         <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-icon">
-  
+              <span className="material-symbols-outlined">footprint</span>
             </div>
             <p className="stat-label">Steps</p>
             <p className="stat-value">{fitnessData.steps.toLocaleString()}</p>
@@ -560,7 +560,7 @@ const Chat = () => {
           </div>
           <div className="stat-card">
             <div className="stat-icon">
-
+              <span className="material-symbols-outlined">schedule</span>
             </div>
             <p className="stat-label">Active</p>
             <p className="stat-value">{fitnessData.activeMinutes}m</p>

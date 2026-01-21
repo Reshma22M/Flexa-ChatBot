@@ -494,6 +494,33 @@
   font-size: 0.875rem;
 }
 
+/* Floating Chatbot Button */
+.floating-chatbot {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8F2BE5, #FF4DA6);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(143, 43, 229, 0.4);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  overflow: hidden;
+  padding: 0;
+}
+
+.floating-chatbot:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0 12px 32px rgba(143, 43, 229, 0.5);
+}
+
+.floating-chatbot:active {
+  transform: scale(0.95);
+}
+
 @media (max-width: 768px) {
   .hero {
     grid-template-columns: 1fr;
@@ -506,5 +533,12 @@
 
   .nav-links {
     display: none;
+  }
+
+  .floating-chatbot {
+    width: 60px;
+    height: 60px;
+    bottom: 1.5rem;
+    right: 1.5rem;
   }
 }

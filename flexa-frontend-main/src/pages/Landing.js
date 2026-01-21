@@ -153,6 +153,13 @@ const Landing = () => {
         </div>
         <p className="footer-copyright">© 2026 Flexa AI. All rights reserved.</p>
       </footer>
+
+      {/* Floating Chatbot Button */}
+      <button className="floating-chatbot" onClick={() => navigate('/chat')} title="Chat with Flexa">
+        <video autoPlay loop muted playsInline style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}>
+          <source src="/Bot1.mp4" type="video/mp4" />
+        </video>
+      </button>
     </div>
   );
 };
