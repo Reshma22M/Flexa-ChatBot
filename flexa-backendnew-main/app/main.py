@@ -15,11 +15,7 @@ app = FastAPI(title="Flexa Backend")
 # Add CORS middleware to allow frontend to communicate with backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",  # Local development
-        "https://flexa-chatbot.vercel.app",  # Vercel production domain
-        "https://*.vercel.app",   # All Vercel deployments
-    ],
+    allow_origins=["*"],  # Allow all origins for now (fix CORS issues)
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
