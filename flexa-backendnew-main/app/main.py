@@ -9,6 +9,7 @@ from .schema import (
 )
 from .ml import FlexaRecommender
 from .utils import normalize_yes_no, normalize_sex
+from .rag import get_rag_instance
 
 app = FastAPI(title="Flexa Backend")
 
@@ -23,6 +24,9 @@ app.add_middleware(
 
 # Load ML recommender once
 recommender = FlexaRecommender()
+
+# Initialize RAG instance
+rag = get_rag_instance()
 
 # Very simple in-memory sessions (OK for demo/uni project)
 # For production: use Redis / DB
@@ -377,13 +381,13 @@ def chat_message(payload: ChatMessageRequest):
                         msg += f"{i}. {w['title']}\n"
                         msg += f"   ⏱ Duration: {w['duration']} min\n"
                         msg += f"   🔗 Watch: {w['youtube_link']}\n\n"
-                    msg += "Good luck with your fitness journey! 💪"
+                    msg += "\n✨ Remember: Every workout is a step closer to your goals. Stay consistent, stay strong! 💪\n\n'The only bad workout is the one that didn't happen.' - Unknown"
                 else:
-                    msg = "I couldn't find specific videos at the moment, but good luck with your fitness journey! 💪"
+                    msg = "I couldn't find specific videos at the moment, but don't let that stop you! 💪\n\n✨ 'Your body can stand almost anything. It's your mind you have to convince.' Stay committed to your journey!"
             else:
-                msg = "Good luck with your fitness journey! 💪"
+                msg = "Perfect! You're all set! 💪\n\n✨ 'Success is the sum of small efforts repeated day in and day out.' Keep pushing forward!"
         else:
-            msg = "No problem! Good luck with your fitness journey! 💪"
+            msg = "No problem! You've got this! 💪\n\n✨ 'The difference between try and triumph is a little umph!' Stay motivated and crush your goals!"
 
         return ChatMessageResponse(
             session_id=payload.session_id,
@@ -423,3 +427,44 @@ def recommend_direct(req: RecommendationRequest):
         workouts=rec["workouts"],
         safety_note="General guidance only. Consult a professional for medical concerns."
     )
+
+
+@app.post("/rag/ask")
+def rag_ask(question: str):
+    """
+    RAG endpoint - Ask fitness/nutrition questions
+    Example: POST /rag/ask?question=What+is+progressive+overload?
+    """
+    try:
+        answer = rag.answer_question(question)
+        return {
+            "question": question,
+            "answer": answer,
+            "source": "RAG Knowledge Base"
+        }
+    except Exception as e:
+        return {
+            "question": question,
+            "answer": f"Sorry, I couldn't process that question: {str(e)}",
+            "source": "Error"
+        }
+
+
+@app.get("/rag/query")
+def rag_query(query: str, top_k: int = 3):
+    """
+    RAG query endpoint - Get relevant documents for a query
+    Example: GET /rag/query?query=protein&top_k=3
+    """
+    try:
+        results = rag.query(query, top_k=top_k)
+        return {
+            "query": query,
+            "results": results
+        }
+    except Exception as e:
+        return {
+            "query": query,
+            "error": str(e)
+        }
+
