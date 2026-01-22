@@ -75,7 +75,7 @@ const Chat = () => {
     
     const initChat = async () => {
       try {
-        const response = await fetch('http://localhost:5000/chat/start');
+        const response = await fetch('https://flexa-backend.onrender.com/chat/start');
         const data = await response.json();
         setSessionId(data.session_id);
         setMessages([{
@@ -178,7 +178,7 @@ const Chat = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/chat/message', {
+      const response = await fetch('https://flexa-backend.onrender.com/chat/message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -248,7 +248,7 @@ const Chat = () => {
     
     // Initialize new session
     try {
-      const response = await fetch('http://localhost:5000/chat/start');
+      const response = await fetch('https://flexa-backend.onrender.com/chat/start');
       const data = await response.json();
       setSessionId(data.session_id);
       setMessages([{
