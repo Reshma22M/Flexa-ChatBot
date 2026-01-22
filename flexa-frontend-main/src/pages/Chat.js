@@ -427,7 +427,7 @@ const Chat = () => {
               placeholder="Ask Flexa about your fitness journey..."
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress}
+              onKeyDown={handleKeyPress}
               disabled={loading}
             />
             <button onClick={sendMessage} disabled={loading} className="send-btn">
