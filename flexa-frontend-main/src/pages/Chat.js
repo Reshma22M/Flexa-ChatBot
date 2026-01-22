@@ -67,7 +67,8 @@ const Chat = () => {
       const newTarget = calculateCalorieTarget();
       setFitnessData(prev => ({ ...prev, caloriesTarget: newTarget }));
     }
-  }, [userData.weight, userData.height, userData.goal, calculateCalorieTarget]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData.weight, userData.height, userData.goal]);
 
   // Initialize chat session
   useEffect(() => {
