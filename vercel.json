@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd flexa-frontend-main && npm install --legacy-peer-deps && npm run build",
+  "outputDirectory": "flexa-frontend-main/build",
+  "devCommand": "cd flexa-frontend-main && npm start",
+  "installCommand": "cd flexa-frontend-main && npm install --legacy-peer-deps",
+  "framework": null
+}
