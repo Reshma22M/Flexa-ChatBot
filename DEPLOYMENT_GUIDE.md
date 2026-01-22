@@ -266,7 +266,7 @@ git push
 1. Open your Vercel URL: `https://flexa-frontend.vercel.app`
 2. Click "Start Chatting" or navigate to `/chat`
 3. Test the complete flow:
-   - Name input
+   - Name inputconsole.log('Session ID:', sessionStorage.getItem('sessionId'))
    - Problem description
    - Sex, Age, Height, Weight
    - Health conditions
