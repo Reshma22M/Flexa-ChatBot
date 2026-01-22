@@ -15,7 +15,11 @@ app = FastAPI(title="Flexa Backend")
 # Add CORS middleware to allow frontend to communicate with backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # React default port
+    allow_origins=[
+        "http://localhost:3000",  # Local development
+        "https://*.vercel.app",   # Vercel preview deployments
+        # Add your production domain here after deploying frontend
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
