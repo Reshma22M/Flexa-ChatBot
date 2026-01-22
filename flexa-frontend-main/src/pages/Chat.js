@@ -67,7 +67,7 @@ const Chat = () => {
       const newTarget = calculateCalorieTarget();
       setFitnessData(prev => ({ ...prev, caloriesTarget: newTarget }));
     }
-  }, [userData.weight, userData.height, userData.goal]);
+  }, [userData.weight, userData.height, userData.goal, calculateCalorieTarget]);
 
   // Initialize chat session
   useEffect(() => {
@@ -292,18 +292,18 @@ const Chat = () => {
         </button>
         <nav className="chat-history">
           <p className="history-title">Chat History</p>
-          <a href="#" className="history-item active">
+          <button className="history-item active">
 
             <span>Current Chat</span>
-          </a>
-          <a href="#" className="history-item">
+          </button>
+          <button className="history-item">
 
             <span>Previous Chat</span>
-          </a>
-          <a href="#" className="history-item">
+          </button>
+          <button className="history-item">
 
             <span>Older Chat</span>
-          </a>
+          </button>
         </nav>
       </aside>
 

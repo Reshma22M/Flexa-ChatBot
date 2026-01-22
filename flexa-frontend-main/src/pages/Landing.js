@@ -145,9 +145,9 @@ const Landing = () => {
           <div className="footer-col">
             <h5>Company</h5>
             <ul>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Privacy</a></li>
-              <li><a href="#">Terms</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/privacy">Privacy</a></li>
+              <li><a href="/terms">Terms</a></li>
             </ul>
           </div>
         </div>
