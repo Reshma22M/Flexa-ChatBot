@@ -76,8 +76,16 @@ const Chat = () => {
     
     const initChat = async () => {
       try {
+        console.log('Initializing chat session...');
         const response = await fetch('https://flexa-backend.onrender.com/chat/start');
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+          throw new Error(`Backend returned ${response.status}`);
+        }
+        
         const data = await response.json();
+        console.log('Session initialized:', data.session_id);
         setSessionId(data.session_id);
         setMessages([{
           id: 1,
@@ -88,10 +96,14 @@ const Chat = () => {
         setIsInitialized(true);
       } catch (error) {
         console.error('Error initializing chat:', error);
+        // Still try to create a fallback session
+        const fallbackSessionId = 'fallback-' + Date.now();
+        console.warn('Using fallback session:', fallbackSessionId);
+        setSessionId(fallbackSessionId);
         setMessages([{
           id: 1,
           type: 'ai',
-          content: 'Hi! I\'m Flexa 👋 What\'s your name?',
+          content: 'Connecting to backend... This may take 30-60 seconds on first load. Please try sending your message again.',
           timestamp: new Date()
         }]);
         setIsInitialized(true);
