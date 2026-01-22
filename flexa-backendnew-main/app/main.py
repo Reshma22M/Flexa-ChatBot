@@ -17,8 +17,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",  # Local development
-        "https://flexa-chatbot-5hs6p8s3b-reshmas-projects-9bd06a13.vercel.app",  # Vercel production
-        "https://*.vercel.app",   # Vercel preview deployments
+        "https://flexa-chatbot.vercel.app",  # Vercel production domain
+        "https://*.vercel.app",   # All Vercel deployments
     ],
     allow_credentials=True,
     allow_methods=["*"],
